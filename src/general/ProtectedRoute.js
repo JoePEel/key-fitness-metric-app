@@ -1,37 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import NewResultForm from '../forms/NewResultForm'
-import {deleteResult, updateResult} from '../store/actions/metrics'
+import {checkAuth} from '../store/actions/auth'
+import Home from '../pages/home'
 
 class Result extends Component {
 
 constructor(props) {
   super(props);
-  this.state = {
-      edditing: false
-  }
-}
 
-handleSubmitForm(formData){
-    this.props.updateResult(this.props.metric.id, {...formData, id: this.props.result.id})
-    this.setState({
-        edditing: false
-    })
-}
-
-getDisplayValue(){
-    const result = this.props.result
-    const metric = this.props.metric
-    if(metric.time){
-        const minutes = Math.floor(result.value / 60);
-        const seconds = result.value - (minutes * 60)
-        return `${minutes}:${seconds}`
-    }
-    return `${result.value}${metric.unit}`
 }
 
 componentDidMount(){
-    console.log(this.props.result)
+    this.props.checkAuth()
 }
 
 render(){
@@ -57,13 +37,12 @@ render(){
 
 const mapStateToProps = function(state) {
     return {
-
+        user: state.user
     }
   }
 
   const mapDispatchToProps = {
-    deleteResult,
-    updateResult
+    checkAuth
   };
   
   export default connect(mapStateToProps, mapDispatchToProps)(Result);

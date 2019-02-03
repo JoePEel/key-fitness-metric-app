@@ -5,6 +5,7 @@ import NewMetricForm from '../forms/NewMetricForm'
 import {addResult, deleteResult, updateMetric} from '../store/actions/metrics'
 import Result from './Result'
 import ResultSorter from './ResultSorter'
+import FlipMove from 'react-flip-move';
 
 
 
@@ -31,11 +32,13 @@ handleSubmitFormUpdate(formData){
 
 renderResults(){
     if(this.props.results.length > 0){
-        return this.props.results.map(result => {
-            return (
+        return (
+            <FlipMove>
+            {this.props.results.map(result => 
                 <Result key={result.id} result={result} metric={this.props.metric} />
-            )
-        })
+              )}
+        </FlipMove>
+        )
     }
 }
 

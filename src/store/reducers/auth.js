@@ -1,10 +1,12 @@
 import AuthActions from '../actions/auth'
-const {SET_USER} = AuthActions
+const {SET_USER, UNSET_USER} = AuthActions
 
-const auth = (state = {}, action) => {
+const auth = (state = {checkedAuth: false}, action) => {
     switch (action.type) {
       case SET_USER:
-        return state = action.payload
+        return state = {checkedAuth: true, user: action.payload}
+      case UNSET_USER:
+      return state = {checkedAuth: false, user: {}}
       default:
         return state
     }

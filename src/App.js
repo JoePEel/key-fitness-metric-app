@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 import Home from './pages/Home'
 import Login from './pages/Login'
 import { connect } from 'react-redux';
@@ -21,34 +21,28 @@ class App extends Component {
   }
 
 
-
   render() {
+    const auth = this.props.auth
     return (
-      <div className="App">
-      
-        {/* For testing */}
-        {/* <button onClick={() => this.getUser()}>Get User </button>
-        <h1>{this.props.user.email}</h1> */}
-
-        {/* Top bar component.
-        If auth, give otion to logout */}
-        
+      <div className="App font-sans leading-normal">
         <Router>
           <div>
-            <ul>
-              <li>
-                <Link to="/">Login</Link>
-              </li>
-              <li>
-                <Link to="/home">Home</Link>
-              </li>
-            </ul>
-            <Route exact path="/" component={Login} />
-            <Route path="/home" component={Home} />
+          <Route path="/" render={() => (
+              auth.checkedAuth && auth.user ? (
+                <Redirect to="/home/new"/>
+              ) : (
+                <Login/>
+              )
+            )}/>
+            <Route path="/home/new" render={() => (
+              auth.checkedAuth && auth.user ? (
+                <Home />
+              ) : (
+                <Redirect to="/"/>
+              )
+            )}/>
           </div>
         </Router>
-       
-
       </div>
     );
   }
@@ -56,7 +50,7 @@ class App extends Component {
 
 const mapStateToProps = function(state) {
   return {
-    user: state.auth
+    auth: state.auth
   }
 }
 

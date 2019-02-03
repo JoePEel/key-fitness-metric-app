@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import { connect } from 'react-redux';
 import CurrentMetric from '../connectedComponents/CurrentMetric'
 import NewMetric from '../connectedComponents/NewMetric'
 import {getSingleMetric} from '../store/actions/metrics'
+import {logout} from '../store/actions/auth'
+import TopBar from '../general/TopBar'
 
 class Home extends Component {
 
@@ -15,7 +17,11 @@ componentDidMount(){
   if(this.props.metrics){
     console.log(this.props.metrics, 'home')
   }
- 
+}
+
+handleLogout= () => {
+  console.log('TopBar')
+  this.props.logout()
 }
 
 renderMetricsNav() {
@@ -23,8 +29,15 @@ renderMetricsNav() {
   if(metrics){
     return this.props.metrics.map(metric => {
       return (
-        <li key={metric.id}>
-          <Link to={`/home/metric/${metric.id}`} onClick={() => this.props.getSingleMetric(metric.id)}>{metric.name}</Link>
+        <li className="mt-2" key={metric.id}>
+          <NavLink 
+          className="ml-4 py-1 px-2 rounded no-underline text-black bg-grey-lighter" 
+            activeStyle={activeLinkStyle} 
+            to={`/home/metric/${metric.id}`} 
+            onClick={() => this.props.getSingleMetric(metric.id)}
+          >
+            {metric.name}
+          </NavLink>
         </li>
       )
     })
@@ -33,22 +46,26 @@ renderMetricsNav() {
 }
 render(){
     return (
-      <div>
-        <h1>Home</h1>
-        <Router>
-          <div>
-            <ul>
-              <li>
-                <Link to="/home/new">New</Link>
-              </li>
-              {this.renderMetricsNav()}
-            </ul>
-            <Route exact path="/home/metric/:id" component={CurrentMetric} />
-            <Route exact path="/home/new" component={NewMetric} />
-          </div>
-        </Router>
-
-
+      <div className="bg-blue-light h-screen">
+        <TopBar logout={this.handleLogout}/>
+        <div className="container mx-auto">
+          <Router>
+            <div>
+              <ul className="bg-white my-6 rounded p-4 flex flex-row flex-wrap list-reset">
+                <li className="mt-2">
+                  <NavLink 
+                    className="ml-4 py-1 px-2 font-bold rounded no-underline text-black bg-grey-lighter" 
+                    activeStyle={activeLinkStyle} to="/home/new">New</NavLink>
+                </li>
+                {this.renderMetricsNav()}
+              </ul>
+              <div className="bg-white p-4 rounded">
+                <Route exact path="/home/metric/:id" component={CurrentMetric} />
+                <Route exact path="/home/new" component={NewMetric} />
+              </div>
+            </div>
+          </Router>
+        </div>
       </div>
     )
 }
@@ -62,10 +79,16 @@ const mapStateToProps = function(state) {
 }
 
 const mapDispatchToProps = {
-  getSingleMetric
+  getSingleMetric,
+  logout
   //cehck auth
 };
 
+const activeLinkStyle = {
+  backgroundColor: '#36a8f9',
+  color: 'white',
+}
+
   
-  export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
   
