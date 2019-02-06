@@ -70,7 +70,7 @@ class newResultForm extends Component {
 
   textInput(label, property){
     return (
-      <div>
+      <div className="formGroup">
         <label>{label}</label>
         <input type='number' 
           value={this.state[property]} 
@@ -85,20 +85,30 @@ class newResultForm extends Component {
   }
 
   render() {
-    const state = this.state;
     const metric = this.props.metric
 
     return (
-      <div>
-        {this.textInput(metric.time ? 'Minutes' : metric.unit, metric.time ? 'minutes' : 'value')}
-        {metric.time ? this.textInput('Seconds', 'seconds') : ''}
-        <DatePicker
-          selected={this.state.date}
-          onChange={this.handleChange}
-          showTimeSelect
-          dateFormat="dd/MM/yyyy HH:mm"
-        />
-        <button onClick={() => this.validate()}>Submit</button>
+      <div className="flex flex-col">
+        <div className="flex md:flex-row flex-col justify-center">
+          {this.textInput(metric.time ? 'Minutes' : metric.unit, metric.time ? 'minutes' : 'value')}
+          {metric.time ? this.textInput('Seconds', 'seconds') : ''}
+          <div className="formGroup">
+            <label>Date</label>
+            <DatePicker
+              selected={this.state.date}
+              onChange={this.handleChange}
+              
+              showTimeSelect
+              dateFormat="dd/MM/yyyy HH:mm"
+            />
+          </div>
+        </div>
+        <button
+          className="text-sm mt-4 hover:underline text-green focus:outline-none"
+          onClick={() => this.validate()}
+        >
+          Submit
+        </button>
       </div>
     )
   }

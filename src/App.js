@@ -24,7 +24,7 @@ class App extends Component {
   render() {
     const auth = this.props.auth
     return (
-      <div className="App font-sans leading-normal">
+      <div className="App font-sans leading-normal min-h-full">
         <Router>
           <div>
           <Route path="/" render={() => (

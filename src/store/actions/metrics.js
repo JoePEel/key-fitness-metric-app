@@ -40,6 +40,18 @@ export const updateMetric = (metricId, formData) => {
 }
 
 
+export const deleteMetric = (metricId) => {
+    return async (dispatch, getState) => {
+        let res = await api.post(`api/metric/delete`, {
+            id: metricId
+        })
+        dispatch({ type: UPDATE_SELECTED_METRIC, payload: {}})
+        
+        res = await api.get('/api/metric')
+        dispatch({ type: SET_ALL_METRICS, payload: res.data.metrics})
+    }
+}
+
 
 export const addResult = (metricId, formData) => {
     return async (dispatch, getState) => {
@@ -87,6 +99,7 @@ export const updateResult = (metricId, formData) => {
     }
 }
 
+
 export const sortResult = (type, order) => {
     return {
         type: SORT_RESULT_BY_VALUE,
@@ -95,7 +108,6 @@ export const sortResult = (type, order) => {
             order
         }
     }
-
 }
 
 

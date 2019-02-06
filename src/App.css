@@ -31,4 +31,50 @@
   }
 }
 
+.route-wrapper {
+  position: relative;
+}
 
+.route-wrapper > div {
+  position: absolute;
+}
+
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-right: 1rem;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.formGroup label {
+  font-weight: 400;
+  font-size: 0.8rem;
+}
+
+.formGroup input, .react-datepicker__input-container input {
+  padding: 5px;
+  width: 10rem;
+  border-radius: 3px;
+  box-shadow: 0px 1px 2px rgb(214, 214, 214)
+}
+
+.formGroup input:focus {
+  outline: none;
+}
+
+.formGroup-grey input {
+  background-color: rgb(238, 238, 245);
+}
+
+.formGroup input[type='checkbox'] {
+  width: auto;
+}
+
+@media only screen and (max-width: 768px) {
+  body {
+    background-color: lightblue;
+  }
+}

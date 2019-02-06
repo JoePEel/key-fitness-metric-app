@@ -7,6 +7,7 @@ import {getSingleMetric} from '../store/actions/metrics'
 import {logout} from '../store/actions/auth'
 import TopBar from '../general/TopBar'
 
+
 class Home extends Component {
 
 constructor(props) {
@@ -20,7 +21,6 @@ componentDidMount(){
 }
 
 handleLogout= () => {
-  console.log('TopBar')
   this.props.logout()
 }
 
@@ -29,7 +29,7 @@ renderMetricsNav() {
   if(metrics){
     return this.props.metrics.map(metric => {
       return (
-        <li className="mt-2" key={metric.id}>
+        <li className="my-2" key={metric.id}>
           <NavLink 
           className="ml-4 py-1 px-2 rounded no-underline text-black bg-grey-lighter" 
             activeStyle={activeLinkStyle} 
@@ -46,20 +46,20 @@ renderMetricsNav() {
 }
 render(){
     return (
-      <div className="bg-blue-light h-screen">
+      <div className="bg-blue-light min-h-full pb-16" style={{minHeight: '100vh'}}>
         <TopBar logout={this.handleLogout}/>
         <div className="container mx-auto">
           <Router>
             <div>
-              <ul className="bg-white my-6 rounded p-4 flex flex-row flex-wrap list-reset">
-                <li className="mt-2">
+              <ul className="bg-white my-4 rounded p-2 flex flex-row flex-wrap list-reset">
+                <li className="my-2">
                   <NavLink 
                     className="ml-4 py-1 px-2 font-bold rounded no-underline text-black bg-grey-lighter" 
                     activeStyle={activeLinkStyle} to="/home/new">New</NavLink>
                 </li>
                 {this.renderMetricsNav()}
               </ul>
-              <div className="bg-white p-4 rounded">
+              <div>
                 <Route exact path="/home/metric/:id" component={CurrentMetric} />
                 <Route exact path="/home/new" component={NewMetric} />
               </div>

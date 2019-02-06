@@ -21,26 +21,37 @@ sortBy(type){
     })
 }
 
+getClasses = (type) =>{
+    const active = this.state.active
+    const styles = active == type ? "bg-green text-white" : "bg-white text-black";
+    return `${styles} rounded m-4 shadow py-2 px-4 focus:outline-none`
+}
+
 
 render(){
     return (
         <div>
-            <button onClick={() => this.sortBy('date')}>Date</button>
-            <button onClick={() => this.sortBy('value')}>Value</button>
+            <button
+                className={this.getClasses('date')}
+                onClick={() => this.sortBy('date')}
+            >
+                Date
+            </button>
+            <button
+                className={this.getClasses('value')}
+                onClick={() => this.sortBy('value')}
+            >
+                Result
+            </button>
         </div>
     )
 }
     
 }
 
-const mapStateToProps = function(state) {
-    return {
-
-    }
-  }
 
   const mapDispatchToProps = {
     sortResult,
   };
   
-  export default connect(mapStateToProps, mapDispatchToProps)(Result);
+  export default connect(null, mapDispatchToProps)(Result);
